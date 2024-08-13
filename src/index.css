@@ -1,0 +1,33 @@
+svg {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  display: block;
+  margin: 0 auto;
+}
+
+circle {
+  transition: fill 0.3s, stroke-width 0.3s;
+}
+
+circle:hover {
+  stroke-width: 6px;
+  cursor: pointer;
+}
+
+text {
+  font-family: Arial, sans-serif;
+  pointer-events: none;
+}
+
+line {
+  stroke: #aaa;
+  transition: stroke-width 0.3s;
+}
+
+.graph-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+}
