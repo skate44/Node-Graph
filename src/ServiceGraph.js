@@ -1,38 +1,52 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
+import './index.css';
 
 const ServiceGraph = ({ data }) => {
     const svgRef = useRef();
 
     useEffect(() => {
 
-        // Set up the SVG canvas dimensions
         const svg = d3.select(svgRef.current)
                       .attr('width', 800)
                       .attr('height', 600);
     
-        // Clear previous elements
         svg.selectAll('*').remove();
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
     
         const width = 800;
         const height = 600;
-    
-        // Set up simulation for nodes and links
+
         const simulation = d3.forceSimulation(data.nodes)
             .force('link', d3.forceLink(data.links).id(d => d.id).distance(150))
             .force('charge', d3.forceManyBody().strength(-400))
             .force('center', d3.forceCenter(width / 2, height / 2));
     
-        // Add links (edges)
         const link = svg.append('g')
             .selectAll('line')
             .data(data.links)
             .enter()
             .append('line')
             .attr('stroke-width', d => Math.sqrt(d.value))
-            .attr('stroke', '#999');
+            .attr('stroke', '#999')
+            .on("mouseover", (event, d) => {
+                tooltip.transition().duration(200).style("opacity", .9);
+                tooltip.html(`<strong>Source:</strong> ${d.source.name}<br/>
+                              <strong>Target:</strong> ${d.target.name}<br/>
+                              <strong>Invocations:</strong> ${d.invocations}<br/>
+                              <strong>Latency:</strong> ${d.latency}ms`);
+            })
+            .on("mousemove", (event) => {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
     
-        // Add nodes
         const node = svg.append('g')
             .selectAll('circle')
             .data(data.nodes)
@@ -45,9 +59,24 @@ const ServiceGraph = ({ data }) => {
             .call(d3.drag()
                 .on('start', dragStarted)
                 .on('drag', dragged)
-                .on('end', dragEnded));
+                .on('end', dragEnded))
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", .9);
+                    tooltip.html(`<strong>Service:</strong> ${d.name}<br/>
+                                  <strong>Port:</strong> ${d.port}<br/>
+                                  <strong>Namespace:</strong> ${d.namespace}<br/>
+                                  <strong>Cluster:</strong> ${d.cluster}<br/>
+                                  <strong>Success Rate:</strong> ${d.successRate}%`);
+                })
+                
+            .on("mousemove", (event) => {
+                tooltip.style("left", (event.pageX + 10) + "px")
+                       .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", () => {
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
     
-        // Add node labels
         const label = svg.append('g')
             .selectAll('text')
             .data(data.nodes)
@@ -59,7 +88,6 @@ const ServiceGraph = ({ data }) => {
             .style('font-size', '12px')
             .style('fill', '#333');
     
-        // Add icons to nodes (Service Type Icon)
         node.append('svg:image')
             .attr('xlink:href', d => d.icon)
             .attr('x', -12)
@@ -99,8 +127,6 @@ const ServiceGraph = ({ data }) => {
     
     }, [data]);
     
-    
-
     return <svg ref={svgRef}></svg>;
 };
 
