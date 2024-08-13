@@ -70,3 +70,9 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Contact
 
 For any questions or suggestions, feel free to reach out to [rahul20107@iiitd.ac.in](mailto:rahul20107@iiitd.ac.in).
+
+## Video Link
+
+ ```bash
+https://drive.google.com/file/d/1rBSjTQb1mrMjgyt64H7-9oklrd2Ez06x/view?usp=sharing
+```
