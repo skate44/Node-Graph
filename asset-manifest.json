@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/node-graph/static/css/main.df3ba46c.css",
+    "main.js": "/node-graph/static/js/main.fb9c0945.js",
+    "static/js/453.54e5aace.chunk.js": "/node-graph/static/js/453.54e5aace.chunk.js",
+    "index.html": "/node-graph/index.html",
+    "main.df3ba46c.css.map": "/node-graph/static/css/main.df3ba46c.css.map",
+    "main.fb9c0945.js.map": "/node-graph/static/js/main.fb9c0945.js.map",
+    "453.54e5aace.chunk.js.map": "/node-graph/static/js/453.54e5aace.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.df3ba46c.css",
+    "static/js/main.fb9c0945.js"
+  ]
+}
